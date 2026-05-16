@@ -11,7 +11,7 @@ export type AuthStackParamList = {
 };
 
 export type MainTabParamList = {
-  Home: NavigatorScreenParams<HomeStackParamList>;
+  HomeTab: NavigatorScreenParams<HomeStackParamList>;
   Rentals: undefined;
   Profile: undefined;
   Settings: undefined;
@@ -21,4 +21,5 @@ export type HomeStackParamList = {
   Home: undefined;
   Search: undefined;
   ItemDetails: { itemId: string };
+  Notifications: undefined;
 };
