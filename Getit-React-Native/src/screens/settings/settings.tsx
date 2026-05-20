@@ -31,11 +31,21 @@ export default function SettingsScreen() {
     );
   };
 
+  const openNotifications = () => {
+    // navigate to Notifications inside HomeTab
+    navigation.navigate('Main' as any, { screen: 'HomeTab', params: { screen: 'Notifications' } } as any);
+  };
+
+
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title" style={styles.title}>
         Settings
       </ThemedText>
+
+      <TouchableOpacity style={styles.logoutButton} onPress={openNotifications}>
+        <ThemedText style={styles.logoutButtonText}>Notifications</ThemedText>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <ThemedText style={styles.logoutButtonText}>Logout</ThemedText>
@@ -57,6 +67,11 @@ const styles = StyleSheet.create({
   logoutButton: {
     backgroundColor: '#FF3B30',
     borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  menuItem: {
     padding: 16,
     alignItems: 'center',
     marginTop: 16,
