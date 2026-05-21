@@ -7,12 +7,22 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
+
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
+import { LineChart } from 'react-native-chart-kit';
+
 import { HomeStackParamList } from '../../navigation/types';
 
-export default function HomeScreen({ navigation }: { navigation: NavigationProp<HomeStackParamList> }) {
+export default function HomeScreen({
+  navigation,
+}: {
+  navigation: NavigationProp<HomeStackParamList>;
+}) {
+  const screenWidth = Dimensions.get('window').width;
+
   const myRentals = [
     {
       id: 1,
@@ -95,7 +105,7 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
         {/* HEADER */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.welcome}>Welcome</Text>
+            <Text style={styles.welcome}>Welcome 👋</Text>
             <Text style={styles.name}>Mr Takunda</Text>
           </View>
 
@@ -113,44 +123,152 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
               style={styles.notificationButton}
               onPress={() => navigation.navigate('Notifications')}
             >
-              <Ionicons name="notifications-outline" size={24} color="#111" />
+              <Ionicons
+                name="notifications-outline"
+                size={24}
+                color="#111"
+              />
+
               <View style={styles.notificationDot} />
             </TouchableOpacity>
           </View>
         </View>
 
-        {/* DASHBOARD CARD */}
+        {/* SEARCH BAR */}
+        <TouchableOpacity style={styles.searchBar}>
+          <Ionicons name="search" size={20} color="#777" />
+
+          <Text style={styles.searchText}>
+            Search rentals...
+          </Text>
+
+          <View style={styles.filterButton}>
+            <Ionicons
+              name="options-outline"
+              size={18}
+              color="#fff"
+            />
+          </View>
+        </TouchableOpacity>
+
+        {/* BALANCE CARD */}
         <View style={styles.balanceCard}>
-          <Text style={styles.balanceLabel}>Total Rental Earnings</Text>
+          <Text style={styles.balanceLabel}>
+            Total Rental Earnings
+          </Text>
 
-          <Text style={styles.balanceAmount}>$4,50,933</Text>
+          <Text style={styles.balanceAmount}>
+            $4,50,933
+          </Text>
 
-          <Text style={styles.monthlyLabel}>Monthly Revenue</Text>
+          <Text style={styles.monthlyLabel}>
+            Monthly Revenue
+          </Text>
 
           <View style={styles.profitRow}>
-            <Text style={styles.monthlyProfit}>$12,484</Text>
+            <Text style={styles.monthlyProfit}>
+              $12,484
+            </Text>
 
             <View style={styles.profitBadge}>
-              <Ionicons name="caret-up" size={12} color="#fff" />
-              <Text style={styles.profitPercent}>+10%</Text>
+              <Ionicons
+                name="caret-up"
+                size={12}
+                color="#fff"
+              />
+
+              <Text style={styles.profitPercent}>
+                +10%
+              </Text>
             </View>
           </View>
+        </View>
+
+        {/* ANALYTICS GRAPH */}
+        <View style={styles.analyticsCard}>
+          <View style={styles.analyticsHeader}>
+            <View>
+              <Text style={styles.analyticsTitle}>
+                Revenue Analytics
+              </Text>
+
+              <Text style={styles.analyticsSubtitle}>
+                Last 6 months performance
+              </Text>
+            </View>
+
+            <TouchableOpacity style={styles.analyticsBadge}>
+              <Text style={styles.analyticsBadgeText}>
+                +18%
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <LineChart
+            data={{
+              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+              datasets: [
+                {
+                  data: [1200, 2100, 1800, 3200, 2800, 4200],
+                },
+              ],
+            }}
+            width={screenWidth - 70}
+            height={220}
+            yAxisLabel="$"
+            withInnerLines={false}
+            withOuterLines={false}
+            withVerticalLines={false}
+            withHorizontalLines={false}
+            withShadow={false}
+            withDots={true}
+            bezier
+            chartConfig={{
+              backgroundColor: '#fff',
+              backgroundGradientFrom: '#fff',
+              backgroundGradientTo: '#fff',
+
+              decimalPlaces: 0,
+
+              color: (opacity = 1) =>
+                `rgba(79, 110, 247, ${opacity})`,
+
+              labelColor: () => '#999',
+
+              propsForDots: {
+                r: '5',
+                strokeWidth: '2',
+                stroke: '#4F6EF7',
+              },
+
+              propsForBackgroundLines: {
+                strokeWidth: 0,
+              },
+            }}
+            style={styles.chart}
+          />
         </View>
 
         {/* TOGGLE */}
         <View style={styles.toggleContainer}>
           <TouchableOpacity style={styles.activeToggle}>
-            <Text style={styles.activeToggleText}>Rentals</Text>
+            <Text style={styles.activeToggleText}>
+              Rentals
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.inactiveToggle}>
-            <Text style={styles.inactiveToggleText}>Bookings</Text>
+            <Text style={styles.inactiveToggleText}>
+              Bookings
+            </Text>
           </TouchableOpacity>
         </View>
 
         {/* MY RENTALS */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>My Rentals</Text>
+          <Text style={styles.sectionTitle}>
+            My Rentals
+          </Text>
         </View>
 
         <ScrollView
@@ -159,12 +277,17 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
           contentContainerStyle={styles.portfolioContainer}
         >
           {myRentals.map((item) => (
-            <View style={styles.portfolioCard} key={item.id}>
+            <View
+              style={styles.portfolioCard}
+              key={item.id}
+            >
               <View style={styles.coinRow}>
                 <View
                   style={[
                     styles.dynamicIcon,
-                    { backgroundColor: item.color },
+                    {
+                      backgroundColor: item.color,
+                    },
                   ]}
                 >
                   <MaterialCommunityIcons
@@ -174,15 +297,23 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
                   />
                 </View>
 
-                <Text style={styles.coinName}>{item.name}</Text>
+                <Text style={styles.coinName}>
+                  {item.name}
+                </Text>
               </View>
 
-              <Text style={styles.portfolioLabel}>Rental Income</Text>
+              <Text style={styles.portfolioLabel}>
+                Rental Income
+              </Text>
 
               <View style={styles.portfolioBottom}>
-                <Text style={styles.portfolioPrice}>{item.amount}</Text>
+                <Text style={styles.portfolioPrice}>
+                  {item.amount}
+                </Text>
 
-                <Text style={styles.portfolioGrowth}>▲ {item.growth}</Text>
+                <Text style={styles.portfolioGrowth}>
+                  ▲ {item.growth}
+                </Text>
               </View>
             </View>
           ))}
@@ -190,10 +321,14 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
 
         {/* TRENDING RENTALS */}
         <View style={styles.popularHeader}>
-          <Text style={styles.sectionTitle}>Trending Rentals</Text>
+          <Text style={styles.sectionTitle}>
+            Trending Rentals
+          </Text>
 
           <TouchableOpacity>
-            <Text style={styles.seeMore}>See More</Text>
+            <Text style={styles.seeMore}>
+              See More
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -206,7 +341,9 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
               <View
                 style={[
                   styles.dynamicIconSmall,
-                  { backgroundColor: item.color },
+                  {
+                    backgroundColor: item.color,
+                  },
                 ]}
               >
                 <MaterialCommunityIcons
@@ -217,16 +354,28 @@ export default function HomeScreen({ navigation }: { navigation: NavigationProp<
               </View>
 
               <View>
-                <Text style={styles.currencyName}>{item.title}</Text>
+                <Text style={styles.currencyName}>
+                  {item.title}
+                </Text>
 
                 <View style={styles.currencyInfo}>
-                  <Text style={styles.currencySymbol}>{item.category}</Text>
+                  <Text style={styles.currencySymbol}>
+                    {item.category}
+                  </Text>
 
-                  <Text style={styles.currencyGrowth}>▲ {item.growth}</Text>
+                  <Text style={styles.currencyGrowth}>
+                    ▲ {item.growth}
+                  </Text>
                 </View>
 
-                {/* ONLY FIX APPLIED HERE */}
-                <Text style={[styles.currencyPrice, { marginTop: 4 }]}>{item.price}</Text>
+                <Text
+                  style={[
+                    styles.currencyPrice,
+                    { marginTop: 4 },
+                  ]}
+                >
+                  {item.price}
+                </Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -267,7 +416,7 @@ const styles = StyleSheet.create({
   },
 
   name: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: '700',
     color: '#111',
   },
@@ -285,8 +434,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
+
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+
     shadowOpacity: 0.05,
     shadowRadius: 8,
     elevation: 3,
@@ -302,11 +456,48 @@ const styles = StyleSheet.create({
     right: 10,
   },
 
+  searchBar: {
+    marginTop: 25,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    paddingHorizontal: 18,
+    paddingVertical: 16,
+
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+
+  searchText: {
+    flex: 1,
+    marginLeft: 10,
+    color: '#888',
+    fontSize: 16,
+  },
+
+  filterButton: {
+    width: 38,
+    height: 38,
+    borderRadius: 12,
+    backgroundColor: '#4F6EF7',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   balanceCard: {
     backgroundColor: '#4F6EF7',
     borderRadius: 30,
     padding: 25,
-    marginTop: 28,
+    marginTop: 25,
   },
 
   balanceLabel: {
@@ -319,6 +510,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 42,
     fontWeight: '700',
+    marginBottom: 25,
   },
 
   monthlyLabel: {
@@ -344,6 +536,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 20,
+
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
@@ -351,7 +544,61 @@ const styles = StyleSheet.create({
 
   profitPercent: {
     color: '#fff',
-    fontWeight: '600',
+    fontWeight: '700',
+  },
+
+  analyticsCard: {
+    backgroundColor: '#fff',
+    borderRadius: 30,
+    padding: 22,
+    marginTop: 25,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+
+  analyticsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+
+  analyticsTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#111',
+  },
+
+  analyticsSubtitle: {
+    color: '#888',
+    marginTop: 4,
+    fontSize: 15,
+  },
+
+  analyticsBadge: {
+    backgroundColor: '#EEF3FF',
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 14,
+  },
+
+  analyticsBadgeText: {
+    color: '#4F6EF7',
+    fontWeight: '700',
+    fontSize: 15,
+  },
+
+  chart: {
+    borderRadius: 20,
+    marginLeft: -25,
   },
 
   toggleContainer: {
@@ -409,8 +656,13 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     padding: 22,
     marginRight: 18,
+
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+
     shadowOpacity: 0.08,
     shadowRadius: 10,
     elevation: 5,
@@ -473,6 +725,7 @@ const styles = StyleSheet.create({
   popularHeader: {
     marginTop: 35,
     marginBottom: 20,
+
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -489,11 +742,13 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 18,
     marginBottom: 18,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+
     shadowOpacity: 0.05,
     shadowRadius: 8,
     elevation: 3,
