@@ -3,6 +3,7 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 export type RootStackParamList = {
   Auth: NavigatorScreenParams<AuthStackParamList>;
   Main: NavigatorScreenParams<MainTabParamList>;
+  EditProfile: undefined;
 };
 
 export type AuthStackParamList = {
@@ -13,6 +14,7 @@ export type AuthStackParamList = {
 export type MainTabParamList = {
   HomeTab: NavigatorScreenParams<HomeStackParamList>;
   Rentals: undefined;
+  Upload: undefined;
   Profile: undefined;
   Settings: undefined;
 };
